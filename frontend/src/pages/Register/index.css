@@ -68,6 +68,11 @@ h2 {
     background-color: #3c5dcc; /* Darker blue on hover */
 }
 
+.feedback {
+    color: red;
+    display: none;
+}
+
 p {
     margin-top: 1rem;
     color: #777777;
@@ -81,3 +86,4 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
