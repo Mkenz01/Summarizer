@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-function Login() {
+function Register() {
     const [message, setMessage] = React.useState('');
     const [loginName, setLoginName] = React.useState('');
     const [loginPassword, setPassword] = React.useState('');
 
     return (
-        <div id="loginDiv">
+        /*<div id="loginDiv">
             <span id="inner-title">PLEASE LOG IN</span><br />
             <input type="text" id="loginName" placeholder="Username"
                 onChange={handleSetLoginName} />
@@ -15,7 +15,49 @@ function Login() {
             <input type="submit" id="loginButton" className="buttons" value="Do It"
                 onClick={doLogin} />
             <span id="loginResult">{message}</span>
+        </div>*/
+
+        <div className="signup-container">
+            <h2>Create an Account</h2>
+            <form id="signup-form" action="/signup" method="POST">
+                {/*<!-- Full Name Field */}
+                <div className="form-group">
+                    <label htmlFor="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name"/>
+                </div>
+
+                {/* Email Field */}
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email"/>
+                </div>
+
+                {/* Username Field */}
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a username"/>
+                </div>
+
+                {/* Password Field */}
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter a password"/>
+                </div>
+
+                {/* Confirm Password Field */}
+                <div className="form-group">
+                    <label htmlFor="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required placeholder="Re-enter your password"/>
+                </div>
+
+                {/*} Submit Button */}
+                <button type="submit" className="submit-button">Sign Up</button>
+
+                {/* Redirect to Login Page */}
+                <p>Already have an account? <a href="/Login">Log in</a></p>
+            </form>
         </div>
+
     );
 
     function handleSetLoginName(e: any): void {
@@ -60,4 +102,4 @@ function Login() {
 
 
 
-export default Login;
+export default Register;

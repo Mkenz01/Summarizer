@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-function CardUI() {
+function HomeUI() {
     let _ud: any = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
     let userId: string = ud.id;
@@ -76,21 +76,21 @@ function CardUI() {
         setCardNameValue(e.target.value);
     }
     return (
-        <div id="cardUIDiv">
-            <br />
-            Search: <input type="text" id="searchText" placeholder="Card To Search For"
-                onChange={handleSearchTextChange} />
-            <button type="button" id="searchCardButton" className="buttons"
-                onClick={searchCard}> Search Card</button><br />
-            <span id="cardSearchResult">{searchResults}</span>
-            <p id="cardList">{cardList}</p><br /><br />
-            Add: <input type="text" id="cardText" placeholder="Card To Add"
-                onChange={handleCardTextChange} />
-            <button type="button" id="addCardButton" className="buttons"
-                onClick={addCard}> Add Card </button><br />
-            <span id="cardAddResult">{message}</span>
+    <body>
+        <div className="side-bar">
+            <div className="side-bar-header">Website Name</div>
+            <div className="divider"></div>
+            <a href="homepage.html" className="side-bar-links" id="first-link" target="_self">Home</a>
+            <a href="homepage.html" className="side-bar-links" target="_self">Upload</a>
+            <a href="homepage.html" className="side-bar-links" target="_self">My Acccount</a>
+            <a href="homepage.html" className="side-bar-logout" target="_self">Log out</a>
         </div>
+        <div className="right-container">
+            <h1 className="container-heading">Home Page</h1>
+            <p>Welcome back, User!</p>
+        </div>
+    </body>
     );
 }
 
-export default CardUI;
+export default HomeUI;
