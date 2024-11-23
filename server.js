@@ -26,7 +26,7 @@ client.connect();
 
 app.post('/api/login', async (req, res, next) => {
     // incoming: login, password
-    // outgoing: id, firstName, lastName, error
+    // outgoing: id, fullname, error
     var error = '';
     const { login, password } = req.body;
     const db = client.db();
@@ -35,16 +35,31 @@ app.post('/api/login', async (req, res, next) => {
         db.collection('Users').find({ Login: login, Password: password }).toArray();
     var id = -1;
     var fn = '';
-    var ln = '';
     if (results.length > 0) {
-        id = results[0].UserId;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
+        id = results[0]._id;
+        fn = results[0].fullName;
     }
-    var ret = { id: id, firstName: fn, lastName: ln, error: '' };
+    var ret = { id: id, fullName: fn, error: '' };
     res.status(200).json(ret);
 });
 
+app.post('/api/signup', async (req, res, next) => {
+    // incoming: fullname login, password
+    // outgoing: id, fullname, error
+    var error = '';
+    const { fullName, login, password } = req.body;
+    const db = client.db();
+    console.log(await db.stats())
+    const results = await
+        db.collection('Users').insertOne({FullName: fullName, Login: login, Password: password });
+    if (results.length > 0) {
+        error = results.error
+    }
+    var ret = { error: error };
+    res.status(200).json(ret);
+});
+
+/*
 app.post('/api/addcard', async (req, res, next) => {
     // incoming: userId, color
     // outgoing: error
@@ -78,3 +93,4 @@ app.post('/api/searchcards', async (req, res, next) => {
     var ret = { results: _ret, error: error };
     res.status(200).json(ret);
 });
+*/

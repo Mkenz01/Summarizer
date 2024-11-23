@@ -92,10 +92,10 @@ function Register() {
 
     async function doSignUp(event: any): Promise<void> {
         event.preventDefault();
-        var obj = { login: loginName, password: loginPassword };
+        var obj = {fullName: fullName, login: loginName, password: loginPassword };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch('http://localhost:5000/api/login',
+            const response = await fetch('http://localhost:5000/api/signup',
                 {
                     method: 'POST', body: js, headers: {
                         'Content-Type':
@@ -103,17 +103,9 @@ function Register() {
                     }
                 });
             var res = JSON.parse(await response.text());
-            console.log(res);
-            if (res.id <= 0) {
-                setMessage('User/Password combination incorrect');
-            }
-            else {
-                var user =
-                    { firstName: res.firstName, lastName: res.lastName, id: res.id }
-                localStorage.setItem('user_data', JSON.stringify(user));
-                setMessage('');
-                window.location.href = '/cards';
-            }
+            console.log(res)
+            if(res.error == "")
+                window.location.href = '/';
         }
         catch (error: any) {
             alert(error.toString());

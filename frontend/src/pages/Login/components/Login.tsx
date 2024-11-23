@@ -76,10 +76,10 @@ function Login() {
             }
             else {
                 var user =
-                    { firstName: res.firstName, lastName: res.lastName, id: res.id }
+                    { fullName: res.fullName, id: res.id }
                 localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
-                window.location.href = '/cards';
+                window.location.href = '/home';
             }
         }
         catch (error: any) {
