@@ -95,7 +95,7 @@ function Register() {
         var obj = {fullName: fullName, login: loginName, password: loginPassword };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch('http://localhost:5000/api/signup',
+            const response = await fetch('https://summarizer4331.jordanshouse.site/api/login',
                 {
                     method: 'POST', body: js, headers: {
                         'Content-Type':
