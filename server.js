@@ -3,12 +3,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 app.use(cors({
-    origin: true,  // Allow only this origin
+    origin: 'https://summarizer4331.jordanshouse.site',  // Allow only this origin
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],  // Allowed headers
 }));
 app.use(bodyParser.json());
-
 app.listen(5000); // start Node + Express server on port 5000
 
 const MongoClient = require('mongodb').MongoClient;
