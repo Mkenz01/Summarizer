@@ -16,10 +16,7 @@ app.use((req, res, next) => {
     );
     next();
 });
-const PORT = 5000;
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});// start Node + Express server on port 5000
+app.listen(5000); // start Node + Express server on port 5000
 
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://samwwise06:1AjdVHl@cop4331cards.6tpx1.mongodb.net/Cop4331?retryWrites=true&w=majority&appName=cop4331Cards';
