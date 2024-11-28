@@ -7,6 +7,12 @@ app.use(cors({
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],  // Allowed methods
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],  // Allowed headers
 }));
+app.options('*', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://summarizer4331.jordanshouse.site');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.status(200).end(); // Respond with a successful status for OPTIONS requests
+});
 app.use(bodyParser.json());
 app.listen(5000); // start Node + Express server on port 5000
 
