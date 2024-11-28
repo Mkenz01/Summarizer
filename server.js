@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 app.use(cors({
-    origin: 'https://summarizer4331.jordanshouse.site',  // Allow only this origin
+    origin: true,  // Allow only this origin
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],  // Allowed HTTP methods
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],  // Allowed headers
 }));
