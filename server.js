@@ -17,7 +17,7 @@ app.use((req, res, next) => {
     next();
 });
 const PORT = 5000;
-app.listen(PORT, 'localhost', () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });// start Node + Express server on port 5000
 
