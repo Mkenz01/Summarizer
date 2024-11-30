@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
             const formData = new FormData();
             formData.append("fileToUpload", file);
 
-            fetch("http://localhost:5000/api/upload", {
+            fetch("https://Summarizer4331.jordanshouse.site/api/upload", {
                 method: "POST",
                 body: formData,
             })
