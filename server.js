@@ -1,3 +1,4 @@
+const { extractTextFromFile, summarizeText, generateQuizQuestions } = require('./summarization');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -94,3 +95,28 @@ app.post('/api/searchcards', async (req, res, next) => {
     res.status(200).json(ret);
 });
 */
+
+app.post('/process-file', async (req, res) => {
+  const { filePath } = req.body;
+
+  try {
+    const textData = await extractTextFromFile(filePath);
+    const summary = await summarizeText(textData);
+    //const quiz = await generateQuizQuestions(summary);
+    res.json({ summary });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to process the file' });
+  }
+});
+
+app.post('/generat-quiz', async (req, res) =>{
+    const { summary } = req.body;
+
+    try{
+        const quiz = await generateQuizQuestions(summary);
+        res.json({ summary });
+    }
+    catch(error){
+        res.status(500).json({error: 'Failed to generate quiz' });
+    }
+});
