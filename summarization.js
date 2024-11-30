@@ -108,3 +108,9 @@ async function generateQuizQuestions(textData, maxLength = 50) {
     console.log(error);
   }
 })();
+
+module.exports = {
+  extractTextFromFile,
+  summarizeText,
+  generateQuizQuestions,
+};
