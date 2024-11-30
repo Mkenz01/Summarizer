@@ -60,6 +60,11 @@ app.post('/api/signup', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
+app.post('/api/getquiz', async (req, res, next) => {
+    var ret = { quiz: "question 1 ::: {answer 1} ::: answer 2 ::: answer 3 ;;; question 2 ::: answer 1 ::: {answer 2} ::: answer 3 ;;;question 3 ::: answer 1 ::: answer 2 ::: {answer 3}" };
+    res.status(200).json(ret);
+});
+
 /*
 app.post('/api/addcard', async (req, res, next) => {
     // incoming: userId, color

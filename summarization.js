@@ -4,9 +4,9 @@ global.window = window;
 const officeParser = require('officeparser');
 const fs = require('fs');
 //const pipe = require('@huggingface/transformers');
-const { pipeline } = require('@huggingface/transformers');
+//const { pipeline } = require('@huggingface/transformers');
 const { OpenAI } = require('openai');
-const { SummarizationPipeline } = require('@huggingface/transformers');
+//const { SummarizationPipeline } = require('@huggingface/transformers');
 
 const openai = new OpenAI({
   apiKey: 'YOUR_API_KEY HERE', dangerouslyAllowBrowser: true
