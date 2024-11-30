@@ -12,7 +12,7 @@ const openai = new OpenAI({
   apiKey: 'YOUR_API_KEY HERE', dangerouslyAllowBrowser: true
 });
 
-async function extractTextFromPPTX(filePath) {
+async function extractTextFromFile(filePath) {
   return new Promise((resolve, reject) => {
     officeParser.parseOffice(filePath, (data, err) => {
       if (err) {
@@ -92,7 +92,7 @@ async function generateQuizQuestions(textData, maxLength = 50) {
   try{
     //const filePath = "C:/Users/andre/Downloads/COP 4331 - Gathering Requirements.pptx";
     const filePath = "C:/Users/andre/Downloads/Projects.docx";
-    const textData = await extractTextFromPPTX(filePath);
+    const textData = await extractTextFromFile(filePath);
     console.log("Printing the text:\n" +textData);
 
     const summaries = await summarizeText(textData);
@@ -108,3 +108,9 @@ async function generateQuizQuestions(textData, maxLength = 50) {
     console.log(error);
   }
 })();
+
+module.exports = {
+  extractTextFromFile,
+  summarizeText,
+  generateQuizQuestions,
+};
