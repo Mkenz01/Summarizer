@@ -10,7 +10,9 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     const [isFileSelected, setIsFileSelected] = useState(false);
 
     function doHandleLogout() {
-        console.log("logout")
+        window.location.href = '/login';
+        localStorage.clear();
+
     }
 
     const handleFileChange = (e: any) => {
