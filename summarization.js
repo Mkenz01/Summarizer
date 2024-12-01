@@ -14,6 +14,7 @@ const openai = new OpenAI({
 
 async function extractTextFromFile(filePath) {
   return new Promise((resolve, reject) => {
+      console.log("extractingtext")
     officeParser.parseOffice(filePath, (data, err) => {
       if (err) {
         console.log("Error is : " + err);
@@ -66,7 +67,7 @@ async function generateQuizQuestions(textData, maxLength = 50) {
 
   const messages = [
     { role: "system", content: "You are a helpful assistant." },
-    { role: "user", content: `Based on the following summarized content, generate a list of quiz questions:\n\n${textData}\n\nPlease make the questions varied and engaging, and ensure they are suitable for a quiz. Also provide multiple choice answers to the questions.` }
+    { role: "user", content: `Based on the following summarized content, generate a list of quiz questions:\n\n${textData}\n\nPlease make the questions varied and engaging, and ensure they are suitable for a quiz. Also provide multiple choice answers to the questions. Separate questions with a ";;;" and answers with a ":::" surround the correct answer with a "{:answer:}"` }
   ];
 
   try {
@@ -86,7 +87,7 @@ async function generateQuizQuestions(textData, maxLength = 50) {
     console.error("Error generating quiz questions:", error);
   }
 }
-
+/*
 // Example usage
 (async () => {
   try{
@@ -108,7 +109,7 @@ async function generateQuizQuestions(textData, maxLength = 50) {
     console.log(error);
   }
 })();
-
+*/
 module.exports = {
   extractTextFromFile,
   summarizeText,

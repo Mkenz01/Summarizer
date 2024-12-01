@@ -24,7 +24,8 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     };
 
     const handleFileSelect = () => {
-        onSelect("Upload");
+        onSelect("Summary");
+        //setIsFileSelected(true);
         document.getElementById("fileToUpload")?.click();
     };
 
@@ -34,9 +35,9 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     const handleSubmitFile = () => {
         if (file) {
             const formData = new FormData();
-            formData.append("fileToUpload", file);
+            formData.append("file", file);
 
-            fetch("https://Summarizer4331.jordanshouse.site/api/upload", {
+            fetch("http://localhost:5000/api/process-file", {
                 method: "POST",
                 body: formData,
             })
@@ -69,7 +70,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 }}
             >
                 Upload
-                <FontAwesomeIcon icon={faUpload} size="1x" />
+                <FontAwesomeIcon icon={faUpload} size="1x"/>
             </div>
 
             {/* Show Submit Button in Sidebar if File is Selected, may need to fix later */}
@@ -77,17 +78,30 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 <button
                     onClick={handleSubmitFile}
                     className="side-bar-links"
-                    style={{ marginLeft: "10px", marginTop: "5px", fontSize: "16px" }}
+                    style={{marginLeft: "10px", marginTop: "5px", fontSize: "16px"}}
                 >
                     Submit
                 </button>
             )}
-                <a className="side-bar-links" onClick={() => onSelect('Quiz')}>Quiz</a>
-                <a className="side-bar-links" onClick={() => onSelect('Summary')}>Summary</a>
-                <a className="side-bar-links" onClick={doHandleLogout}>Log out</a>
+            <div>
+                {/* what the upload the types of files it can handle*/}
+                <div className="upload-container">
+                    <input
+                        type="file"
+                        id="fileToUpload"
+                        name="fileToUpload"
+                        style={{display: "none"}}
+                        accept=".pptx, .docx"
+                        onChange={handleFileChange}
+                    />
+                </div>
             </div>
-            );
-            }
+            <a className="side-bar-links" onClick={() => onSelect('Quiz')}>Quiz</a>
+            <a className="side-bar-links" onClick={() => onSelect('Summary')}>Summary</a>
+            <a className="side-bar-links" onClick={doHandleLogout}>Log out</a>
+        </div>
+    );
+}
 
 
-            export default Sidebar;
+export default Sidebar;

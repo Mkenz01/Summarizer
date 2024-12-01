@@ -43,19 +43,7 @@ function Upload() {
   };
 
   return (
-    <div>
-        {/* what the upload the types of files it can handle*/}
-        <div className="upload-container">
-          <input
-            type="file"
-            id="fileToUpload"
-            name="fileToUpload"
-            style={{ display: "none" }}
-            accept="image/*, .pdf, .docx, .txt"
-            onChange={handleFileChange}
-          />
-        </div>
-      </div>
+    <div>upload</div>
   );
 }
 

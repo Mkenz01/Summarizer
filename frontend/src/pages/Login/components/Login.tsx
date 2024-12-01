@@ -62,7 +62,7 @@ function Login() {
         var obj = { login: loginName, password: loginPassword };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch('https://summarizer4331.jordanshouse.site/api/login',
+            const response = await fetch('http://localhost:5000/api/login',
                 {
                     method: 'POST', body: js, headers: {
                         'Content-Type':
