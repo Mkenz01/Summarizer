@@ -5,11 +5,13 @@ import './index.css'
 import './components/sidebar.css'
 import {useState} from "react";
 const HomePage: React.FC = () => {
-        const [selection, setSelection] = useState<string>('Account'); // Default to 'dashboard'
+        const [selection, setSelection] = useState<string>(sessionStorage.getItem("sidebarSelection") || "Account"); // Default to 'dashboard'
 
         const handleSelect = (component: string): void => {
             setSelection(component);
         };
+
+        const[isFileSelected, setIsFileSelected] = useState(false);
 
 return(
     <div>

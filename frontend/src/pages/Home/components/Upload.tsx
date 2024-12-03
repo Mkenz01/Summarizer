@@ -32,6 +32,8 @@ function Upload() {
         .then((response) => response.json())
         .then((data) => {
           //setMessage("File uploaded successfully");
+          console.log(data);
+          localStorage.setItem("summary", data.summary);
           setIsFileSelected(false);
         })
         .catch((error) => {

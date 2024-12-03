@@ -12,8 +12,14 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     function doHandleLogout() {
         window.location.href = '/login';
         localStorage.clear();
+        sessionStorage.clear();
 
     }
+
+    const handleSelect = (selection: string) => {
+        onSelect(selection);
+        sessionStorage.setItem('sidebarSelection', selection);
+    };
 
     const handleFileChange = (e: any) => {
         const selectedFile = e.target.files[0];
@@ -25,6 +31,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
 
     const handleFileSelect = () => {
         onSelect("Summary");
+        sessionStorage.setItem("sidebarSelection", "Summary");
         //setIsFileSelected(true);
         document.getElementById("fileToUpload")?.click();
     };
@@ -43,9 +50,11 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    //setMessage("File uploaded successfully");
+                    console.log(data);
+                    localStorage.setItem("summary", data.summary);
+                    localStorage.setItem("summaryId", data.summaryId);
                     setIsFileSelected(false);
-                })
+                }).then(()=>{window.location.reload();})
                 .catch((error) => {
                     //setMessage("Error uploading file");
                 });
@@ -58,7 +67,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
         <div className="side-bar">
             <div className="side-bar-header">Website Name</div>
             <div className="divider"></div>
-            <a className="side-bar-links" onClick={() => onSelect('Account')}>My Acccount</a>
+            <a className="side-bar-links" onClick={() => handleSelect('Account')}>My Acccount</a>
 
             <div
                 className="side-bar-links"
@@ -96,8 +105,8 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                     />
                 </div>
             </div>
-            <a className="side-bar-links" onClick={() => onSelect('Quiz')}>Quiz</a>
-            <a className="side-bar-links" onClick={() => onSelect('Summary')}>Summary</a>
+            <a className="side-bar-links" onClick={() => handleSelect('Quiz')}>Quiz</a>
+            <a className="side-bar-links" onClick={() => handleSelect('Summary')}>Summary</a>
             <a className="side-bar-links" onClick={doHandleLogout}>Log out</a>
         </div>
     );
