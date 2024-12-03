@@ -115,10 +115,10 @@ app.post('/process-file', async (req, res) => {
 });
 
 app.post('/generat-quiz', async (req, res) =>{
-    const { summary } = req.body;
+    const { summary, temp } = req.body;
 
     try{
-        const quiz = await generateQuizQuestions(summary);
+        const quiz = await generateQuizQuestions(summary, temp);
         res.json({ summary });
     }
     catch(error){
