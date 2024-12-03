@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import './account.css'
+import './sidebar.css'
 
 function Quiz() {
     return (
@@ -9,7 +10,7 @@ function Quiz() {
                 <div className="box-container">
                     <h3>Profile</h3>
                     <div className="circle"></div>
-                    <h2 className="headers-in-box">JAMES HAYES</h2>
+                    <h3 className="headers-in-box">User Name</h3>
                     <div className="text-fields">
                         <div className="text-information">Username:</div>
                     </div>
