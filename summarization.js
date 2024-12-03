@@ -60,7 +60,7 @@ async function summarizeSlides(textData, maxLength = 40) {
   return summaries;
 }
 */
-async function generateQuizQuestions(textData, maxLength = 50) {
+async function generateQuizQuestions(textData, maxLength = 50, temp) {
   // Create the string of summarized data
   //const combinedText = textData.join(" ");
 
@@ -75,7 +75,7 @@ async function generateQuizQuestions(textData, maxLength = 50) {
       model: "gpt-4o-mini",
       messages: messages,
       max_tokens: 1000,
-      temperature: 0.7 
+      temperature: temp 
     });
     const generatedText = response.choices[0].message.content.trim();
     const questions = generatedText.split("\n").filter(q => q.trim() !== "");
