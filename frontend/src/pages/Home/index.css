@@ -4,17 +4,16 @@ body{
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family:'Times New Roman', Times, serif;
 }
 
 .right-container{
-    width: calc(100% - 200px);
+    width: calc(100% - 250px);
     height: 100vh;
     margin-left: 250px;
     background-color: #ffffff;
 
 }
-
 .side-bar{
     width: 250px;
     height: 100vh;
@@ -73,7 +72,7 @@ body{
 }
 
 .container-heading{
-    font-size: 24pt;
+    font-size: 16pt;
     color: #000000;
     margin-top: 40px;
 }

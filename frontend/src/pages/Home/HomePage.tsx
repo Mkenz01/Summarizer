@@ -2,6 +2,7 @@ import Sidebar from './components/Sidebar.tsx';
 import Content from './components/Content.tsx';
 import Quiz from './components/Quiz.tsx';
 import './index.css'
+import './components/sidebar.css'
 import {useState} from "react";
 const HomePage: React.FC = () => {
         const [selection, setSelection] = useState<string>('Account'); // Default to 'dashboard'
