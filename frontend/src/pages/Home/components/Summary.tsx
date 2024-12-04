@@ -10,7 +10,7 @@ function Summary() {
     return (
         <>
         <div className="right-container">
-            <h1 className="container-heading">Summary Page</h1>
+            <h1 className="container-heading">Summary</h1>
             <p className="container-information">Summary of filename.pdf</p>
             <p className="container-information">Created: 11/24/2024</p>
             <textarea id="summary-text-box" readOnly>
