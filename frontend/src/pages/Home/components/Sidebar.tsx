@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+
 const apiUrl = import.meta.env.VITE_API_URL;
 interface SidebarSelection {
     onSelect: (selection: string) => void;
@@ -76,7 +77,10 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
         <div className="side-bar">
             <div className="side-bar-header">Summarizer</div>
             <div className="divider"></div>
-            <a className="side-bar-links" onClick={() => handleSelect('Account')}>My Acccount</a>
+            <a className="side-bar-links" onClick={() => handleSelect('Account')}>
+                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <h3>My Account</h3>
+            </a>
 
             <div
                 className="side-bar-links"
@@ -114,9 +118,18 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                     />
                 </div>
             </div>
-            <a className="side-bar-links" onClick={() => handleSelect('Quiz')}>Quiz</a>
-            <a className="side-bar-links" onClick={() => handleSelect('Summary')}>Summary</a>
-            <a className="side-bar-links" onClick={doHandleLogout}>Log out</a>
+            <a className="side-bar-links" onClick={() => handleSelect('Summary')}>
+                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <h3>Summary</h3>
+            </a>
+            <a className="side-bar-links" onClick={() => handleSelect('Quiz')}>
+                <img src="../../../images/account-icon.png" alt="quiz icon" className="icons"/>
+                <h3>Quiz</h3>
+            </a>
+            <a className="side-bar-links" onClick={doHandleLogout}>
+                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <h3>Log out</h3>
+            </a>
         </div>
     );
 }
