@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
@@ -25,7 +25,7 @@ function Upload() {
       const formData = new FormData();
       formData.append("fileToUpload", file);
 
-      fetch("http://localhost:5000/api/upload", {
+      fetch(apiUrl + "/api/upload", {
         method: "POST",
         body: formData,
       })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 function Login() {
     const [message, setMessage] = React.useState('');
     const [loginName, setLoginName] = React.useState('');
@@ -62,7 +62,7 @@ function Login() {
         var obj = { login: loginName, password: loginPassword };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch('http://localhost:5000/api/login',
+            const response = await fetch(apiUrl+'/api/login',
                 {
                     method: 'POST', body: js, headers: {
                         'Content-Type':

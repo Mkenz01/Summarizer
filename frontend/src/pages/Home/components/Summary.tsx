@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './summary.css'
 import './sidebar.css'
+const apiUrl = import.meta.env.VITE_API_URL;
+
 
 interface SummaryProps {
     handleSummarySelect: () => void;
@@ -44,7 +46,7 @@ function Summary() {
                 userId: JSON.parse(localStorage.getItem("user_data") || "{}").id
             };
             console.log(data)
-            fetch("http://localhost:5000/api/search-summaries", {
+            fetch(apiUrl+"/api/search-summaries", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,7 +75,7 @@ function Summary() {
         const data = {
             summaryId: summaryId
         };
-        fetch("http://localhost:5000/api/get-summary", {
+        fetch(apiUrl+"/api/get-summary", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

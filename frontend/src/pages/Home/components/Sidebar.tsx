@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-
+const apiUrl = import.meta.env.VITE_API_URL;
 interface SidebarSelection {
     onSelect: (selection: string) => void;
 }
@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
             formData.append("file", file);
             formData.append("userId", JSON.parse(localStorage.getItem("user_data") || "").id);
 
-            fetch("http://localhost:5000/api/process-file", {
+            fetch(apiUrl+"/api/process-file", {
                 method: "POST",
                 body: formData,
             })
