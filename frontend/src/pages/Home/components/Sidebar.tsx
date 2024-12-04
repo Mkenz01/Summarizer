@@ -65,33 +65,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 });
         } else {
             //setMessage("No file selected.");
-        }
 
-        const handleSummarySelect = () => {
-            if (summaryId != "") {
-                const formData = new FormData();
-                formData.append("summaryId", summaryId);
-                console.log("fetching summary")
-                fetch("http://localhost:5000/api/get-summary", {
-                    method: "POST",
-                    body: formData,
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log("Data:")
-                        console.log(data);
-                        localStorage.setItem("summary", data.summary);
-                        localStorage.setItem("quiz", data.quiz);
-                        localStorage.setItem("summaryName", data.name);
-                        localStorage.setItem("summaryDateCreated", data.dateCreated);
-
-                    }).then(()=>{window.location.reload();})
-                    .catch((error) => {
-                        //setMessage("Error uploading file");
-                    });
-            } else {
-                //setMessage("No file selected.");
-            }
 
 
         };

@@ -33,12 +33,16 @@ app.post('/api/login', async (req, res, next) => {
     // outgoing: id, fullname, error
     var error = '';
     const { login, password } = req.body;
+    if (!login || !password) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
     const db = client.db();
     console.log(await db.stats())
     const results = await
-        db.collection('Users').find({ Login: login, Password: password }).toArray();
+        db.collection('Users').find({ Login: login.trim(), Password: password.trim() }).toArray();
     var id = -1;
     var fn = '';
+    console.log(results)
     if (results.length > 0) {
         id = results[0]._id;
         fn = results[0].fullName;
@@ -53,10 +57,13 @@ app.post('/api/signup', async (req, res, next) => {
     // outgoing: id, fullname, error
     var error = '';
     const { fullName, login, password } = req.body;
+    if (!fullName || !login || !password) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
     const db = client.db();
     console.log(await db.stats())
     const results = await
-        db.collection('Users').insertOne({FullName: fullName, Login: login, Password: password });
+        db.collection('Users').insertOne({FullName: fullName.trim(), Login: login.trim(), Password: password.trim() });
     if (results.length > 0) {
         error = results.error
     }
@@ -69,27 +76,50 @@ app.post('/api/getquiz', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
-/*
+
 app.post('/api/search-summaries', async (req, res, next) => {
     // incoming: userId, search
     // outgoing: results[], error
     var error = '';
     const { userId, search } = req.body;
+    if (!userId) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
+    console.log(req.body);
     var _search = search.trim();
     const db = client.db();
-    const results = await db.collection('Cards').find({ "Card": { $regex: _search + '.*' } }).toArray();
+    const results = await db.collection('Summaries').find({
+        $and: [
+            {
+                $or: [
+                    { "Name": { $regex: _search, $options: "i" } },
+                    { "Summary": { $regex: _search, $options: "i" } }
+                ]
+            },
+            { "userId": userId }
+        ]}).toArray();
     var _ret = [];
     for (var i = 0; i < results.length; i++) {
-        _ret.push(results[i].Card);
+        _ret.push(
+            {
+                name: results[i].Name,
+                dateCreated: results[i].DateCreated,
+                summaryId: results[i]._id
+            }
+        );
     }
-    var ret = { results: _ret, error: error };
+    var ret = { summaries: _ret, error: error };
     res.status(200).json(ret);
 });
-*/
+
 
 app.post('/api/get-summary', async (req, res, next) => {
     var error = 'summary not found';
     const { summaryId } = req.body;
+    if (!summaryId) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
+    console.log(summaryId);
     summaryObjectId = new ObjectId(summaryId);
     const db = client.db();
     const results = await db.collection('Summaries').find({ "_id": summaryObjectId}).toArray();
@@ -109,8 +139,10 @@ app.post('/api/get-summary', async (req, res, next) => {
 });
 
 app.post('/api/process-file', upload.single('file'), async (req, res) => {
-  const { file } = req.body;
   const { userId } = req.body;
+    if (!userId) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
 
   try {
       var fileBuffer = req.file.buffer;

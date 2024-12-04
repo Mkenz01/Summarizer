@@ -38,7 +38,7 @@
 
 .past-files-side-bar
 {
-    width: 200px;
+
     height: 100vh;
     background-color: #c0ddff;
     position: fixed;
@@ -67,5 +67,18 @@
     text-align: left;
     margin-left: 15px;
     margin-bottom: 15px;
+}
+
+.input-box{
+    padding-bottom: 100px;
+    height: 10px;
+
+}
+
+.summary-card{
+    background: #ffffff;
+    border-radius: 15px;
+    margin: 5px;
+    cursor: pointer;
 }
 
