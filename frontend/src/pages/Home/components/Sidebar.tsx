@@ -8,6 +8,7 @@ interface SidebarSelection {
 const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     const [file, setFile] = useState<File | null>(null);
     const [isFileSelected, setIsFileSelected] = useState(false);
+    const [summaryId, setSummaryId] = useState<string>(localStorage.getItem("summaryId") || "");
 
     function doHandleLogout() {
         window.location.href = '/login';
@@ -43,6 +44,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
         if (file) {
             const formData = new FormData();
             formData.append("file", file);
+            formData.append("userId", JSON.parse(localStorage.getItem("user_data") || "").id);
 
             fetch("http://localhost:5000/api/process-file", {
                 method: "POST",
@@ -51,8 +53,11 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data);
-                    localStorage.setItem("summary", data.summary);
                     localStorage.setItem("summaryId", data.summaryId);
+                    localStorage.setItem("summary", data.summary);
+                    localStorage.setItem("quiz", data.quiz);
+                    localStorage.setItem("summaryName", data.summaryName);
+                    localStorage.setItem("summaryDateCreated", data.summaryDateCreated);
                     setIsFileSelected(false);
                 }).then(()=>{window.location.reload();})
                 .catch((error) => {
@@ -61,6 +66,36 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
         } else {
             //setMessage("No file selected.");
         }
+
+        const handleSummarySelect = () => {
+            if (summaryId != "") {
+                const formData = new FormData();
+                formData.append("summaryId", summaryId);
+                console.log("fetching summary")
+                fetch("http://localhost:5000/api/get-summary", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log("Data:")
+                        console.log(data);
+                        localStorage.setItem("summary", data.summary);
+                        localStorage.setItem("quiz", data.quiz);
+                        localStorage.setItem("summaryName", data.name);
+                        localStorage.setItem("summaryDateCreated", data.dateCreated);
+
+                    }).then(()=>{window.location.reload();})
+                    .catch((error) => {
+                        //setMessage("Error uploading file");
+                    });
+            } else {
+                //setMessage("No file selected.");
+            }
+
+
+        };
+
     };
 
     return (

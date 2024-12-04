@@ -22,6 +22,7 @@ app.use((req, res, next) => {
 app.listen(5000); // start Node + Express server on port 5000
 
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 const url = 'mongodb+srv://samwwise06:1AjdVHl@cop4331cards.6tpx1.mongodb.net/Cop4331?retryWrites=true&w=majority&appName=cop4331Cards';
 const client = new MongoClient(url);
 client.connect();
@@ -42,7 +43,8 @@ app.post('/api/login', async (req, res, next) => {
         id = results[0]._id;
         fn = results[0].fullName;
     }
-    var ret = { id: id, fullName: fn, error: '' };
+    if(id < 0) error = 'User not found';
+    var ret = { id: id, fullName: fn, error: error };
     res.status(200).json(ret);
 });
 
@@ -68,25 +70,7 @@ app.post('/api/getquiz', async (req, res, next) => {
 });
 
 /*
-app.post('/api/addcard', async (req, res, next) => {
-    // incoming: userId, color
-    // outgoing: error
-    const { userId, card } = req.body;
-    const newCard = { Card: card, UserId: userId };
-    var error = '';
-    try {
-        const db = client.db();
-        const result = db.collection('Cards').insertOne(newCard);
-    }
-    catch (e) {
-        error = e.toString();
-    }
-    //cardList.push(card);
-    var ret = { error: error };
-    res.status(200).json(ret);
-});
-
-app.post('/api/searchcards', async (req, res, next) => {
+app.post('/api/search-summaries', async (req, res, next) => {
     // incoming: userId, search
     // outgoing: results[], error
     var error = '';
@@ -103,8 +87,30 @@ app.post('/api/searchcards', async (req, res, next) => {
 });
 */
 
+app.post('/api/get-summary', async (req, res, next) => {
+    var error = 'summary not found';
+    const { summaryId } = req.body;
+    summaryObjectId = new ObjectId(summaryId);
+    const db = client.db();
+    const results = await db.collection('Summaries').find({ "_id": summaryObjectId}).toArray();
+    console.log(results);
+    var summary = "";
+    var quiz = '';
+    var summaryName = '';
+    var summaryDateCreated = '';
+    if (results.length > 0) {
+        summary = results[0].Summary;
+        quiz = results[0].Quiz;
+        summaryDateCreated = results[0].DateCreated;
+        summaryName = results[0].Name;
+    }
+    var ret = { summary: summary, quiz: quiz, summaryDateCreated: summaryDateCreated, summaryName: summaryName, error: error };
+    res.status(200).json(ret);
+});
+
 app.post('/api/process-file', upload.single('file'), async (req, res) => {
   const { file } = req.body;
+  const { userId } = req.body;
 
   try {
       var fileBuffer = req.file.buffer;
@@ -114,16 +120,16 @@ app.post('/api/process-file', upload.single('file'), async (req, res) => {
     //const quiz = await generateQuizQuestions(summary);
     const db = client.db();
     const dateCreated = new Date()
-    const results = await db.collection('Summaries').insertOne({Name: "", DateCreated: dateCreated, Summary: summary, Quiz: ""})
+    const results = await db.collection('Summaries').insertOne({Name: req.file.originalname, DateCreated: dateCreated, userId: userId, Summary: summary, Quiz: ""})
       console.log(results);
-      res.json({ summary: summary, summaryId: results.insertedId });
+      res.json({ summary: summary, summaryId: results.insertedId, quiz: quiz, summaryDateCreated: dateCreated.toString(), summaryName: req.file.originalname.toString() });
   } catch (error) {
       console.log(error);
     res.status(500).json({ error: 'Failed to process the file' });
   }
 });
 
-app.post('/generat-quiz', async (req, res) =>{
+app.post('/generate-quiz', async (req, res) =>{
     const { summary } = req.body;
 
     try{
