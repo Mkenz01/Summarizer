@@ -23,33 +23,33 @@ function Register() {
             <form id="signup-form" action="/signup" method="POST">
                 {/*<!-- Full Name Field */}
                 <div className="form-group">
-                    <label htmlFor="fullName">Full Name</label>
+                    <label htmlFor="fullName" style={{color: "white"}}>Full Name</label>
                     <input type="text" id="fullName" required placeholder="Enter your full name"
                            onChange={handleSetFullName}/>
                 </div>
                 {/* Email Field */}
                 <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email" style={{color: "white"}}>Email</label>
                     <input type="email" id="email" name="email" required placeholder="Enter your email"/>
                 </div>
 
                 {/* Username Field */}
                 <div className="form-group">
-                    <label htmlFor="loginName">Username</label>
+                    <label htmlFor="loginName" style={{color: "white"}}>Username</label>
                     <input type="text" id="loginName" required placeholder="Choose a username"
                            onChange={handleSetLoginName}/>
                 </div>
 
                 {/* Password Field */}
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password" style={{color: "white"}}>Password</label>
                     <input type="password" id="password" required placeholder="Enter a password"
                            onChange={handleSetPassword}/>
                 </div>
 
                 {/* Confirm Password Field */}
                 <div className="form-group">
-                    <label htmlFor="confirm-password">Confirm Password</label>
+                    <label htmlFor="confirm-password" style={{color: "white"}}>Confirm Password</label>
                     <input type="password" id="confirm-password" required placeholder="Re-enter your password"
                            onChange={handleSetPassword}/>
                 </div>
@@ -61,7 +61,7 @@ function Register() {
                 <button type="submit" className="submit-button" onClick={doSignUp}>Sign Up</button>
 
                 {/* Redirect to Login Page */}
-                <p>Already have an account? <a href="/Login">Log in</a></p>
+                <p>Already have an account? <a href="/Login" style={{color: "white"}}>Log in</a></p>
             </form>
         </div>
 

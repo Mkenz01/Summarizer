@@ -8,14 +8,14 @@ body{
 }
 
 .right-container{
-    width: calc(100% - 250px);
+    width: calc(100% - 400px);
     height: 100vh;
     margin-left: 250px;
     background-color: #ffffff;
 
 }
 .side-bar{
-    width: 250px;
+    width: 400px;
     height: 100vh;
     background-color: #3b689b;
     position: fixed;
@@ -28,8 +28,9 @@ body{
     overflow: visible;
 }
 .side-bar-header{
+    margin-top: 50px;
     color:white;
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
     margin-bottom: 5px;
@@ -42,7 +43,7 @@ body{
 .side-bar-links{
     margin-bottom: 40px;
     color:#000000;
-    font-size: 16pt;
+    font-size: 22pt;
     padding-left: 40px;
     text-align: left;
     text-decoration: none;
@@ -72,7 +73,7 @@ body{
 }
 
 .container-heading{
-    font-size: 16pt;
+    font-size: 24pt;
     color: #000000;
     margin-top: 40px;
 }

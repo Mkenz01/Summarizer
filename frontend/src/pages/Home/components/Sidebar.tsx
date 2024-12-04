@@ -100,7 +100,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
 
     return (
         <div className="side-bar">
-            <div className="side-bar-header">Website Name</div>
+            <div className="side-bar-header">Summarizer</div>
             <div className="divider"></div>
             <a className="side-bar-links" onClick={() => handleSelect('Account')}>My Acccount</a>
 

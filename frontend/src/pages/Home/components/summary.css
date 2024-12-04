@@ -5,18 +5,19 @@
     margin-left: 250px;
     padding: 50px;
     background-color: #ffffff;
-
+    align-items: center;
 }
 .container-heading{
-    font-size: 24pt;
+    font-size: 100pt;
     color: #000000;
     margin-top: 40px;
-    text-align: left;
+    text-align: center;
+    margin-right: 380px;
 }
 #summary-text-box
 {
     width: 800px;
-    min-height: 450px;
+    min-height: 700px;
     max-height: 300px;
     resize: none;
     padding: 20px;
@@ -26,7 +27,14 @@
     user-select: text;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
+    margin-right: 180px;
+    margin-top: 80px
 }  
+
+.container-information
+{
+    margin-right: 180px;
+}
 
 .past-files-side-bar
 {
