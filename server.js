@@ -71,11 +71,6 @@ app.post('/api/signup', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
-app.post('/api/getquiz', async (req, res, next) => {
-    var ret = { quiz: "question 1 ::: {answer 1} ::: answer 2 ::: answer 3 ;;; question 2 ::: answer 1 ::: {answer 2} ::: answer 3 ;;;question 3 ::: answer 1 ::: answer 2 ::: {answer 3}" };
-    res.status(200).json(ret);
-});
-
 
 app.post('/api/search-summaries', async (req, res, next) => {
     // incoming: userId, search
@@ -152,7 +147,7 @@ app.post('/api/process-file', upload.single('file'), async (req, res) => {
     //const quiz = await generateQuizQuestions(summary);
     const db = client.db();
     const dateCreated = new Date()
-    const results = await db.collection('Summaries').insertOne({Name: req.file.originalname, DateCreated: dateCreated, userId: userId, Summary: summary, Quiz: ""})
+    const results = await db.collection('Summaries').insertOne({Name: req.file.originalname, DateCreated: dateCreated, userId: userId, Summary: summary, Quiz: JSON.stringify(quiz)})
       console.log(results);
       res.json({ summary: summary, summaryId: results.insertedId, quiz: quiz, summaryDateCreated: dateCreated.toString(), summaryName: req.file.originalname.toString() });
   } catch (error) {
@@ -201,63 +196,107 @@ const summary = "Biomes Overview\n" +
     "Summary\n" +
     "Biomes are influenced primarily by temperature and precipitation, with variations in these factors affecting plant and animal life. Tropical wet forests have year-round growth due to stable temperatures and high rainfall, while other biomes like deserts and tundras feature low productivity due to harsh conditions. Each biome supports distinct plant and animal adaptations to survive its particular climate."
 
-const quiz = " ;question;\n" +
-    "What are the two main abiotic factors that determine the distribution of biomes?\n" +
-    ":ans: Wind and soil composition\n" +
-    ":ans: Temperature and precipitation\n" +
-    ":ans: Sunlight and humidity\n" +
-    ";cor; Temperature and precipitation\n" +
-    "\n" +
-    ";question;\n" +
-    "Which biome is characterized by high biodiversity, evergreen vegetation, and minimal seasonal temperature variation?\n" +
-    ":ans: Savannas\n" +
-    ":ans: Temperate grasslands\n" +
-    ";cor; Tropical wet forests (rainforests)\n" +
-    "\n" +
-    ";question;\n" +
-    "What is a common feature of savannas?\n" +
-    ":ans: High rainfall year-round\n" +
-    ":ans: Large trees that dominate the landscape\n" +
-    ";cor; Grasslands with scattered trees and a long dry season\n" +
-    "\n" +
-    ";question;\n" +
-    "Which of the following best describes subtropical deserts?\n" +
-    ":ans: A high diversity of plant life, with consistent rainfall throughout the year\n" +
-    ":ans: Temperatures that remain stable with little variation\n" +
-    ";cor; Extreme temperature fluctuations with very little rainfall\n" +
-    "\n" +
-    ";question;\n" +
-    "What is a unique adaptation of plants in the chaparral biome to cope with fire?\n" +
-    ":ans: Roots that grow deeper into the soil to store water\n" +
-    ";cor; Seeds that require fire to germinate\n" +
-    ":ans: Large leaves to retain water during droughts\n" +
-    "\n" +
-    ";question;\n" +
-    "How does precipitation in temperate grasslands compare to that in tropical wet forests?\n" +
-    ":ans: Temperate grasslands receive far more rainfall throughout the year\n" +
-    ":ans: Precipitation in temperate grasslands is higher but with no seasonal variation\n" +
-    ";cor; Temperate grasslands receive less rainfall, which varies seasonally\n" +
-    "\n" +
-    ";question;\n" +
-    "What is a characteristic of the vegetation in tropical wet forests?\n" +
-    ":ans: Sparse, drought-resistant shrubs\n" +
-    ":ans: Evergreen trees that lose their leaves seasonally\n" +
-    ";cor; Broad-leaved evergreen trees that remain green year-round\n" +
-    "\n" +
-    ";question;\n" +
-    "In which biome are plants typically adapted to survive extreme heat by storing water?\n" +
-    ":ans: Tropical wet forests\n" +
-    ":ans: Chaparral\n" +
-    ";cor; Subtropical deserts\n" +
-    "\n" +
-    ";question;\n" +
-    "Which biome is known for supporting grazing animals due to its fertile soil enriched by deep root systems?\n" +
-    ":ans: Tropical wet forests\n" +
-    ";cor; Temperate grasslands\n" +
-    ":ans: Subtropical deserts\n" +
-    "\n" +
-    ";question;\n" +
-    "Which of the following biomes has the highest biodiversity?\n" +
-    ":ans: Savannas\n" +
-    ":ans: Chaparral\n" +
-    ";cor; Tropical wet forests (rainforests)"
+const quiz = {
+    "quizQuestions": [
+        {
+            "question": "What are the two major abiotic factors that shape terrestrial biomes?",
+            "options": [
+                "A. Sunlight and wind",
+                "B. Temperature and precipitation",
+                "C. Altitude and soil type",
+                "D. Latitude and ocean currents"
+            ],
+            "answer": "B"
+        },
+        {
+            "question": "Which biome is characterized by high biodiversity and year-round growing conditions?",
+            "options": [
+                "A. Subtropical Desert",
+                "B. Temperate Grassland",
+                "C. Tropical Wet Forest",
+                "D. Chaparral"
+            ],
+            "answer": "C"
+        },
+        {
+            "question": "What is the average temperature range of tropical wet forests (rainforests)?",
+            "options": [
+                "A. 0°C to 20°C",
+                "B. 24°C to 29°C",
+                "C. 20°C to 34°C",
+                "D. -10°C to 15°C"
+            ],
+            "answer": "C"
+        },
+        {
+            "question": "Which biome is known for having grasses as the dominant vegetation and experiencing extreme seasonal temperature variations?",
+            "options": [
+                "A. Chaparral",
+                "B. Temperate Grassland",
+                "C. Savanna",
+                "D. Tropical Wet Forest"
+            ],
+            "answer": "B"
+        },
+        {
+            "question": "Which biome experiences long dry seasons, has scattered trees, and is found in Africa, South America, and northern Australia?",
+            "options": [
+                "A. Savanna",
+                "B. Temperate Forest",
+                "C. Chaparral",
+                "D. Subtropical Desert"
+            ],
+            "answer": "A"
+        },
+        {
+            "question": "Which adaptation is common among plants in subtropical deserts?",
+            "options": [
+                "A. Shallow root systems for absorbing dew",
+                "B. Waxy leaves to conserve water",
+                "C. Ability to photosynthesize at night",
+                "D. Thick bark to prevent fire damage"
+            ],
+            "answer": "B"
+        },
+        {
+            "question": "In which biome are fires an important ecological disturbance, helping to maintain the landscape and promote plant regrowth?",
+            "options": [
+                "A. Temperate Grassland",
+                "B. Tropical Wet Forest",
+                "C. Subtropical Desert",
+                "D. Tundra"
+            ],
+            "answer": "A"
+        },
+        {
+            "question": "What factor allows chaparral plants to thrive despite frequent fires?",
+            "options": [
+                "A. Thick leaves that resist burning",
+                "B. Deep water storage in roots",
+                "C. Fire-adapted seeds and nutrient-rich ash",
+                "D. Seasonal migration of pollinators"
+            ],
+            "answer": "C"
+        },
+        {
+            "question": "What is the average annual rainfall in subtropical deserts?",
+            "options": [
+                "A. Less than 30 cm",
+                "B. 65-75 cm",
+                "C. 125-660 cm",
+                "D. 25-75 cm"
+            ],
+            "answer": "A"
+        },
+        {
+            "question": "In which biome are epiphytes commonly found, and why?",
+            "options": [
+                "A. Savanna, due to sparse rainfall",
+                "B. Temperate Grassland, because of rich soils",
+                "C. Tropical Wet Forest, for sunlight access",
+                "D. Subtropical Desert, due to dry conditions"
+            ],
+            "answer": "C"
+        }
+    ]
+}

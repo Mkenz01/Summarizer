@@ -18,6 +18,8 @@ function Register() {
             <span id="loginResult">{message}</span>
         </div>*/
 
+        <div className="signup-body">
+
         <div className="signup-container">
             <h2>Create an Account</h2>
             <form id="signup-form" action="/signup" method="POST">
@@ -63,6 +65,8 @@ function Register() {
                 {/* Redirect to Login Page */}
                 <p>Already have an account? <a href="/Login" style={{color: "white"}}>Log in</a></p>
             </form>
+        </div>
+
         </div>
 
     );

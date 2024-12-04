@@ -1,6 +1,7 @@
 import Sidebar from './components/Sidebar.tsx';
 import Content from './components/Content.tsx';
 import Quiz from './components/Quiz.tsx';
+import RightSideBar from './components/RightSideBar.tsx';
 import './index.css'
 import './components/sidebar.css'
 import {useState} from "react";
@@ -14,9 +15,10 @@ const HomePage: React.FC = () => {
         const[isFileSelected, setIsFileSelected] = useState(false);
 
 return(
-    <div>
+    <div className="main">
     <Sidebar onSelect={handleSelect} />
     <Content selectedComponent={selection} />
+    <RightSideBar />
     </div>
 );
 }

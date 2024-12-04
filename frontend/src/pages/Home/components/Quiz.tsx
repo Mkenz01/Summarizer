@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from "react";
 
+interface question {
+  question: string;
+  options: string[];
+  answer: string;
+}
+
+
 const DynamicQuiz: React.FC = () => {
-  const [questions, setQuestions] = useState<
-    { text: string; options: string[] }[]
-  >([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Simulate fetching questions (replace with real API call)
-  useEffect(() => {
-    const mockData = {
-      questions: [
-        { text: "Test Question?", options: ["A", "B", "C", "D"] },
-        { text: "Test Question?", options: ["A", "B", "C", "D"] },
-        { text: "Test Question?", options: ["A", "B", "C", "D"] },
-        { text: "Test Question?", options: ["A", "B", "C", "D"] }
-      ]
-    };
-
-    // Simulating API call
-    setTimeout(() => {
-      setQuestions(mockData.questions);
-      setIsLoaded(true);
-    }, 1000);
-  }, []);
+  //const [questions, setQuestions] = useState<question[]>([]);
+  const isLoaded = true;
+  const questions: question[] = JSON.parse(localStorage.getItem("quiz") || '{"quizQuestions": []}').quizQuestions;
+  console.log(questions);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    alert("Quiz submitted!");
+
+    // Create a FormData object to extract values from the form
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    // Create an object to store the answers
+    const answers: Record<string, string> = {};
+
+    // Iterate through questions and extract the selected answers
+    questions.forEach((question, index) => {
+      const questionKey = `q${index + 1}`; // corresponds to name attribute in input fields
+      const answer = formData.get(questionKey) as string; // Get the selected answer
+      answers[questionKey] = answer;
+    });
+
+    console.log("Submitted Answers:", answers);
+
   };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>Take the Quiz!</h1>
       <form onSubmit={handleSubmit}>
-        {isLoaded ? (
+        {questions.length > 0 ? (
           questions.map((question, index) => (
             <div key={index} style={styles.question}>
               <h2 style={styles.questionTitle}>
-                {index + 1}. {question.text}
+                {index + 1}. {question.question}
               </h2>
               <div style={styles.answers}>
                 {question.options.map((option, optionIndex) => (
@@ -69,11 +73,12 @@ const DynamicQuiz: React.FC = () => {
 };
 
 // Inline styles
+
 const styles: Record<string, React.CSSProperties> = {
   container: {
     maxWidth: "800px",
-    margin: "30px auto",
     backgroundColor: "white",
+    margin: "30px auto",
     padding: "20px",
     borderRadius: "10px",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
@@ -88,7 +93,8 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: "25px",
   },
   questionTitle: {
-    fontSize: "18px",
+    display: "block",
+    fontSize: "1.2em",
     color: "#444",
   },
   answers: {
@@ -97,17 +103,16 @@ const styles: Record<string, React.CSSProperties> = {
   label: {
     display: "block",
     marginBottom: "10px",
-    fontSize: "16px",
+    fontSize: "1em",
     cursor: "pointer",
   },
   input: {
     marginRight: "10px",
   },
   submitButton: {
-    display: "block",
     width: "100%",
     padding: "10px",
-    fontSize: "18px",
+    fontSize: "1.3em",
     color: "white",
     backgroundColor: "#007bff",
     border: "none",

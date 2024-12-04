@@ -17,6 +17,7 @@ function Login() {
             <span id="loginResult">{message}</span>
         </div>*/
 
+        <div className="login-container">
         <div className = "wrapper">
             <form action="">
                 <h2>Login</h2>
@@ -45,6 +46,7 @@ function Login() {
 
 
 
+        </div>
         </div>
 
     );

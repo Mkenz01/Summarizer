@@ -1,10 +1,8 @@
 import Register from './components/Register.tsx';
-import './index.css'
+import './signup.css'
 const RegisterPage = () => {
     return (
-        <div>
             <Register />
-        </div>
     );
 };
 export default RegisterPage;

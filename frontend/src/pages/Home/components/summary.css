@@ -7,6 +7,7 @@
     background-color: #ffffff;
     align-items: center;
 }
+
 .container-heading{
     font-size: 100pt;
     color: #000000;
@@ -29,7 +30,7 @@
     border: 1px solid #ccc;
     margin-right: 180px;
     margin-top: 80px
-}  
+}
 
 .container-information
 {

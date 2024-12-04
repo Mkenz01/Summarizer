@@ -7,13 +7,7 @@
 }
 
 /* Center the container on the page */
-body, html {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Soft pink background */
-}
+
 
 .signup-container {
     background-color: #3B689B;
@@ -87,3 +81,9 @@ p a:hover {
     text-decoration: underline;
 }
 
+.signup-body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

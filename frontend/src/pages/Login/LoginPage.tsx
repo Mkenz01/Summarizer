@@ -1,10 +1,8 @@
 import Login from './components/Login.tsx';
-import './index.css'
+import './login.css'
 const LoginPage = () => {
     return (
-        <div>
             <Login />
-        </div>
     );
 };
 export default LoginPage;

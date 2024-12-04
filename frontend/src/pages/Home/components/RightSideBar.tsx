@@ -14,7 +14,7 @@ interface listedSummary{
     summaryId: string;
 }
 
-function Summary() {
+function RightSideBar() {
     const [listedSummaries, setListedSummaries] = useState<listedSummary[]>([]);
 
     const formatDate = (date: string) => {
@@ -101,18 +101,31 @@ function Summary() {
     }
 
     return (
-        <>
-            <div className="right-container">
-                <h1 className="container-heading">Summary Page</h1>
-                <p className="container-information">Summary of {localStorage.getItem("summaryName")}</p>
-                <p className="container-information">Created: {formatDate(localStorage.getItem("summaryDateCreated") || "")}</p>
-                <textarea id="summary-text-box" readOnly>
-                {localStorage.getItem("summary")}
-            </textarea>
+
+        <div className="past-files-side-bar">
+            <div className="input-box">
+                <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Search..."
+                    onChange={handleInputChange}
+                />
             </div>
-        </>
+            <div className="past-files-side-bar-header">Past Summaries:</div>
+            {listedSummaries.map((summary, index) => (
+                <div className="summary-card" key={index} onClick={() => handleSummarySelect(summary.summaryId)}>
+                    <div className="past-summaries-text" key={index}>
+                        {summary.name}
+                    </div>
+                    <div className="past-summaries-text" key={index}>
+                        {formatDate(summary.dateCreated)}
+                    </div>
+                </div>
+            ))}
+        </div>
+
     );
 }
 
 
-export default Summary;
+export default RightSideBar;
