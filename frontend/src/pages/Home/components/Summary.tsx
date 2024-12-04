@@ -102,13 +102,41 @@ function Summary() {
 
     return (
         <>
-            <div className="right-container">
-                <h1 className="container-heading">Summary Page</h1>
-                <p className="container-information">Summary of {localStorage.getItem("summaryName")}</p>
-                <p className="container-information">Created: {formatDate(localStorage.getItem("summaryDateCreated") || "")}</p>
-                <textarea id="summary-text-box" readOnly>
-                {localStorage.getItem("summary")}
-            </textarea>
+            <div className="middle-section">
+                <div className="content">
+                    <h1 className="container-heading">Summary</h1>
+                    <p className="container-information">Summary of {localStorage.getItem("summaryName")}</p>
+                    <p className="container-information">Created: {formatDate(localStorage.getItem("summaryDateCreated") || "")}</p>
+                    <div className="button-container">
+                        <h4 className="buttons">Upload</h4>
+                        <h4 className="buttons">Take quiz</h4>
+                    </div>
+                    <textarea id="summary-text-box" placeholder="Please upload a file to summarize" readOnly>
+                        {localStorage.getItem("summary")}
+                    </textarea>
+                </div>
+            </div>
+
+            <div className="past-files-side-bar">
+                <div className="input-box">
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search..."
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="past-files-side-bar-header">Past Summaries:</div>
+                {listedSummaries.map((summary, index) => (
+                    <div className="summary-card" key={index} onClick={() => handleSummarySelect(summary.summaryId)}>
+                    <div className="past-summaries-names" key={index}>
+                        {summary.name}
+                    </div>
+                    <div className="past-summaries-text" key={index}>
+                     {formatDate(summary.dateCreated)}
+                    </div>
+                    </div>
+                ))}
             </div>
         </>
     );

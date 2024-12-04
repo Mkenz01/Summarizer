@@ -1,56 +1,84 @@
-
-.right-container{
-    width: calc(100% - 200px);
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
-    margin-left: 250px;
-    padding: 50px;
+    margin: 0;
+    font-family: Arial, sans-serif;
     background-color: #ffffff;
     align-items: center;
 }
-
+h1{
+    text-align: center !important;
+    margin-right: 400px;
+}
+.right-container
+{
+    width: calc(100% - 350px);
+    height: 100vh;
+    margin-left: 400px;
+    background-color: #000000;
+    display:flex;
+}
+.middle-section 
+{
+    width: 900px;
+    flex-grow: 1;                /* Take up remaining space */
+    display: flex;               /* Use flexbox for centering */
+    justify-content: center;     /* Center content horizontally */
+    align-items: center;         /* Center content vertically */
+    background-color: transparent;
+    padding: 20px;
+    margin-left: 207px;          /* Offset the middle section to the right of the left sidebar */
+    margin-right: 300px;         /* Offset the middle section from the right sidebar */
+}
+.content 
+{
+    height: 100%  !important;
+    width: 90%  !important;
+    max-width: 1000px  !important; /* Optional: limit the width of the content */
+    display: flex  !important;
+    flex-direction: column  !important;
+    align-items: center;
+    gap: 10px !important; /* Space between the items */
+    text-align: center !important;
+    background-color: #ffffff;
+}
 .container-heading{
-    font-size: 100pt;
+    font-size: 24pt;
     color: #000000;
-    margin-top: 40px;
-    text-align: center;
-    margin-right: 380px;
+    margin-top: 60px;
+    text-align: center  !important;
+
 }
 #summary-text-box
 {
-    width: 800px;
-    min-height: 700px;
-    max-height: 300px;
-    resize: none;
+    overflow-y: auto  !important;
+    width: 100%  !important;
+    height: 460px;
+    margin-bottom: 30px;
+    max-width: 800px; /* Max width for the text box */
+    min-height: 200px; /* Adjust the height as needed */
     padding: 20px;
     font-size: 16px;
-    overflow: auto;
-    cursor: text;
-    user-select: text;
-    background-color: #f9f9f9;
     border: 1px solid #ccc;
-    margin-right: 180px;
-    margin-top: 80px
-}
-
-.container-information
-{
-    margin-right: 180px;
-}
+    border-radius: 4px;
+    resize: none;
+    background-color: #f9f9f9;
+    align-items: center !important;
+}  
 
 .past-files-side-bar
 {
-
-    height: 100vh;
-    background-color: #c0ddff;
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 30px;
-    overflow: visible;
+    width: 300px !important; /* Set the width of the right sidebar */
+    background-color: #C0DDFF; /* Background color for the sidebar */
+    position: fixed  !important; /* Fix it on the right side */
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0; /* Ensure it extends to the bottom of the screen */
+    overflow-y: auto; /* Allow vertical scrolling if content overflows */
     padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow on the left side */
 }
 .past-files-side-bar-header
 {
@@ -69,17 +97,57 @@
     margin-left: 15px;
     margin-bottom: 15px;
 }
+.past-summaries-names
+{
+    color:#3b689b;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
 
 .input-box{
     padding-bottom: 100px;
     height: 10px;
+    background-color: transparent;
 
 }
-
-.summary-card{
+.summary-card
+{
+    height: 90px;
     background: #ffffff;
     border-radius: 15px;
     margin: 5px;
     cursor: pointer;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
-
+.button-container
+{
+    width:300px;
+    height: 80px;
+    background-color: transparent;
+    display: flex  !important;
+    flex-direction: row  !important;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.buttons
+{
+    width: 100px;
+    height: 50px;
+    background-color: #C0DDFF;
+    border-radius: 7px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color:#000000;
+}
+.buttons:hover
+{
+    background-color: #3b689b;
+}

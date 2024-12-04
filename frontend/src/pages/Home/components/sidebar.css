@@ -5,7 +5,7 @@ body{
     background-color: #f0f2f5;
 }
 .side-bar{
-    width: 250px;
+    width: 400px;
     height: 100vh;
     background-color: #3b689b;
     position: fixed;
@@ -16,6 +16,7 @@ body{
     justify-content: flex-start;
     padding-top: 30px;
     overflow: visible;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 .side-bar-header{
     color:white;
@@ -30,33 +31,56 @@ body{
 
 }
 .side-bar-links{
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     color:#000000;
     font-size: 16pt;
     padding-left: 40px;
     text-align: left;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    display: flex;         /* Flexbox for inner content */
+    justify-content: left; /* Center inner content horizontally */
+    align-items: center;
+    text-align: left;
+    text-decoration: none;
+    gap: 30px
 }
 .side-bar-links:hover{
     color:black;
     background-color: #4178b6;
 }
 .side-bar-logout{
-    margin-top: 300px;
-    margin-bottom: 40px;
+    margin-top: 80px;
+    background-color: transparent;
     color:#000000;
     font-size: 16pt;
+    display: flex;         /* Flexbox for inner content */
+    justify-content: left; /* Center inner content horizontally */
+    align-items: center;
     padding-left: 40px;
     text-align: left;
     text-decoration: none;
+    gap: 30px
 }
 .divider{
-    display:block;
+    display: block;
     width: 80%;
     height: 1px;
     background-color: transparent;
     border-top: 1px solid #ffffff;
     padding: 5px;
     margin: 50px auto;
+}
+.logo
+{
+    margin-top: 50px;
+    width: 70%;
+    padding-bottom: 10px;
+    align-items: center;
+    text-align: center;
+    margin-left: 60px;
+}
+.icons
+{
+    width: 8%;
 }

@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import './account.css'
-import './sidebar.css'
+import './account.css';
+import './sidebar.css';
 
-function Quiz() {
+function Account() {
     return (
         <div className="right-container">
             <h1 className="container-heading">My Account</h1>
             <div className="boxes-container">
                 <div className="box-container">
                     <h3 className="box-headers">Profile</h3>
-                    <div className="circle"></div>
+                    <div className="circle">
+                        <div className="circle1"></div>
+                        <div className="circle2"></div>
+                        <div className="circle3"></div>
+                    </div>
                     <div className="text-fields">
-                        <div className="text-information">Name:</div>
+                        <div className="text-information">First Name:</div>
+                    </div>
+                    <div className="text-fields">
+                        <div className="text-information">Last Name:</div>
                     </div>
                     <div className="text-fields">
                         <div className="text-information">Username:</div>
@@ -38,4 +45,4 @@ function Quiz() {
 );
 }
 
-export default Quiz;
+export default Account;
