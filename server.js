@@ -38,8 +38,12 @@ app.post('/api/login', async (req, res, next) => {
     }
     const db = client.db();
     console.log(await db.stats())
+    const hash= await bcrypt.compare(password.trim(), user.Password);
+    if (!hash) {
+        return res.status(401).json({ id: -1, fullName: '', error: 'Invalid password' });
+    }
     const results = await
-        db.collection('Users').find({ Login: login.trim(), Password: password.trim() }).toArray();
+        db.collection('Users').find({ Login: login.trim(), Password: hash }).toArray();
     var id = -1;
     var fn = '';
     console.log(results)
@@ -62,8 +66,9 @@ app.post('/api/signup', async (req, res, next) => {
     }
     const db = client.db();
     console.log(await db.stats())
+    const hash = await bcrypt.hash(password.trim(), 10);
     const results = await
-        db.collection('Users').insertOne({FullName: fullName.trim(), Login: login.trim(), Password: password.trim() });
+        db.collection('Users').insertOne({FullName: fullName.trim(), Login: login.trim(), Password: hash });
     if (results.length > 0) {
         error = results.error
     }
