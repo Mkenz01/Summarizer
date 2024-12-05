@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                     localStorage.setItem("summaryDateCreated", data.summaryDateCreated);
                     setIsFileSelected(false);
                 }).then(()=>{
-                    //window.location.reload();
+                    window.location.reload();
                 })
                 .catch((error) => {
                     //setMessage("Error uploading file");
