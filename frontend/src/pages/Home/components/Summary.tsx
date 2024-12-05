@@ -93,7 +93,7 @@ function Summary() {
 
             }).then(() => {
                 localStorage.setItem("summaryId", summaryId);
-                window.location.reload();
+                //window.location.reload();
         })
             .catch((error) => {
                 //setMessage("Error uploading file");
