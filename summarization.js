@@ -8,6 +8,7 @@ const fs = require('fs');
 //const { pipeline } = require('@huggingface/transformers');
 const { OpenAI } = require('openai');
 //const { SummarizationPipeline } = require('@huggingface/transformers');
+const {openAiAPI} = require('./.env');
 
 /*const openai = new OpenAI({
   apiKey: "", dangerouslyAllowBrowser: true,
