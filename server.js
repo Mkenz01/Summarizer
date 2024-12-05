@@ -146,6 +146,20 @@ app.post('/api/get-summary', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
+app.post('/api/delete-summary', async (req, res, next) => {
+    var error = 'summary not found';
+    const { summaryId } = req.body;
+    if (!summaryId) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
+    summaryObjectId = new ObjectId(summaryId);
+    const db = client.db();
+    const results = await db.collection('Summaries').deleteOne({ "_id": summaryObjectId});
+    console.log(results);
+    var ret = {error: error };
+    res.status(200).json(ret);
+});
+
 app.post('/api/process-file', upload.single('file'), async (req, res) => {
   const { userId } = req.body;
     if (!userId) {
@@ -246,7 +260,6 @@ app.post('/api/change-user-data', async (req, res, next) => {
     var error = '';
     const { userId, fName, password, userName } = req.body;
     console.log(req.body);
-    const hash= await bcrypt.compare(password.trim(), user.Password);
     let userObjectId = new ObjectId(userId);
     if (!userId || (!fName && !password)) {
         return res.status(400).json({ error: "All fields must be provided." });
@@ -272,14 +285,22 @@ app.post('/api/change-user-data', async (req, res, next) => {
     else {
         updateData = {
             $set: {
-                login: userName,
+                Login: userName,
             },
         };
     }
 
-    const results = await db.collection('Users').updateOne({ "_id": userObjectId, "Password": hash},
-        updateData
+    console.log("updatedata: " + JSON.stringify(updateData));
+    const hashedUser = await db.collection('Users').find({ _id: userObjectId}).toArray();
+    console.log(hashedUser);
+    if( await bcrypt.compare(password, hashedUser[0].Password)){
+        results = await db.collection('Users').updateOne({ "_id": userObjectId},
+            updateData
         );
+        console.log(results);
+    }
+
+
 
     var ret = {error: error };
     res.status(200).json(ret);

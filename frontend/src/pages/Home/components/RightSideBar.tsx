@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './summary.css'
 import './sidebar.css'
 const apiUrl = import.meta.env.VITE_API_URL;
-
+import {faTrash, faUpload} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface SummaryProps {
     handleSummarySelect: () => void;
@@ -100,6 +101,29 @@ function RightSideBar() {
             });
     }
 
+
+    const handleDelete = (summaryId:string) => {
+
+        const data = {
+            summaryId: summaryId
+        };
+        fetch(apiUrl+"/api/delete-summary", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then(() => {
+            window.location.reload();
+        })
+            .catch((error) => {
+                //setMessage("Error uploading file");
+            });
+    }
+
+
     return (
 
         <div className="past-files-side-bar">
@@ -113,7 +137,8 @@ function RightSideBar() {
             </div>
             <div className="past-files-side-bar-header">Past Summaries:</div>
             {listedSummaries.map((summary, index) => (
-                <div className="summary-card" key={index} onClick={() => handleSummarySelect(summary.summaryId)}>
+                <div on className="summary-card" key={index} onClick={() => handleSummarySelect(summary.summaryId)}>
+                    <FontAwesomeIcon onClick={() => handleDelete(summary.summaryId)} style={{position: "absolute", color: "red"}} icon={faTrash} size="1x"/>
                     <div className="past-summaries-text" key={index}>
                         {summary.name}
                     </div>

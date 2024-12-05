@@ -8,11 +8,10 @@ const fs = require('fs');
 //const { pipeline } = require('@huggingface/transformers');
 const { OpenAI } = require('openai');
 //const { SummarizationPipeline } = require('@huggingface/transformers');
-const {openAiAPI} = require('./.env');
 
-const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY, dangerouslyAllowBrowser: true,
-});
+/*const openai = new OpenAI({
+  apiKey: "", dangerouslyAllowBrowser: true,
+});*/
 
 async function extractTextFromFile(filePath) {
   return new Promise((resolve, reject) => {
