@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Register() {
     const [message, setMessage] = React.useState('');
@@ -30,10 +31,7 @@ function Register() {
                            onChange={handleSetFullName}/>
                 </div>
                 {/* Email Field */}
-                <div className="form-group">
-                    <label htmlFor="email" style={{color: "white"}}>Email</label>
-                    <input type="email" id="email" name="email" required placeholder="Enter your email"/>
-                </div>
+
 
                 {/* Username Field */}
                 <div className="form-group">
@@ -99,7 +97,7 @@ function Register() {
         var obj = {fullName: fullName, login: loginName, password: loginPassword };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch('https://summarizer4331.jordanshouse.site/api/signup',
+            const response = await fetch(apiUrl+"/api/signup",
                 {
                     method: 'POST', body: js, headers: {
                         'Content-Type':

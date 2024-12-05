@@ -1,5 +1,6 @@
 const { JSDOM } = require('jsdom');
 const { window } = new JSDOM(``).window;
+require('dotenv').config();
 global.window = window;
 const officeParser = require('officeparser');
 const fs = require('fs');
@@ -7,9 +8,10 @@ const fs = require('fs');
 //const { pipeline } = require('@huggingface/transformers');
 const { OpenAI } = require('openai');
 //const { SummarizationPipeline } = require('@huggingface/transformers');
+const {openAiAPI} = require('./.env');
 
 const openai = new OpenAI({
-  apiKey: 'YOUR_API_KEY HERE', dangerouslyAllowBrowser: true
+  apiKey: process.env.OPEN_AI_API_KEY, dangerouslyAllowBrowser: true,
 });
 
 async function extractTextFromFile(filePath) {
@@ -67,8 +69,35 @@ async function generateQuizQuestions(textData, maxLength = 50, temp) {
 
   const messages = [
     { role: "system", content: "You are a helpful assistant." },
-    { role: "user", content: `Based on the following summarized content, generate a list of quiz questions:\n\n${textData}\n\nPlease make the questions varied and engaging, and ensure they are suitable for a quiz. Also provide multiple choice answers to the questions. Separate questions with a ";;;" and answers with a ":::" surround the correct answer with a "{:answer:}"` }
+    { role: "user", content: `Based on the following summarized content, generate a list of ten quiz questions:\n\n${textData}\n\nPlease make the questions varied and engaging, and ensure they are suitable for a quiz. output only the quiz in exactly the following format with no unnecessary quote marks or headers\n
+    
+    "quizQuestions": [
+        {
+            "question": "What are the two major abiotic factors that shape terrestrial biomes?",
+            "options": [
+                "A. Sunlight and wind",
+                "B. Temperature and precipitation",
+                "C. Altitude and soil type",
+                "D. Latitude and ocean currents"
+            ],
+            "answer": "B"
+        },
+        {
+            "question": "Which biome is characterized by high biodiversity and year-round growing conditions?",
+            "options": [
+                "A. Subtropical Desert",
+                "B. Temperate Grassland",
+                "C. Tropical Wet Forest",
+                "D. Chaparral"
+            ],
+            "answer": "C"
+        }
+     ]
+    
+    ` }
   ];
+
+  console.log(messages[1].content);
 
   try {
     // Prompt the model to create the quiz
@@ -78,11 +107,12 @@ async function generateQuizQuestions(textData, maxLength = 50, temp) {
       max_tokens: 1000,
       temperature: temp 
     });
-    const generatedText = response.choices[0].message.content.trim();
-    const questions = generatedText.split("\n").filter(q => q.trim() !== "");
-
-    console.log(questions);
-    return questions;
+    const generatedText = response.choices[0].message.content;
+    let formattedText = "{"+ generatedText +"}"
+      console.log("formatted generated text:\n" + formattedText);
+      console.log("parsed generated text:\n" + JSON.stringify((JSON).parse(formattedText)));
+    let ret = JSON.stringify((JSON).parse(formattedText))
+    return ret;
   } catch (error) {
     console.error("Error generating quiz questions:", error);
   }

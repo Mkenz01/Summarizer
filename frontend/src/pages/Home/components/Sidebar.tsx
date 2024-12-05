@@ -29,6 +29,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
 
     const handleFileChange = (e: any) => {
         const selectedFile = e.target.files[0];
+
         if (selectedFile) {
             setFile(selectedFile);
             setIsFileSelected(true);
@@ -40,12 +41,16 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
         sessionStorage.setItem("sidebarSelection", "Summary");
         //setIsFileSelected(true);
         document.getElementById("fileToUpload")?.click();
+
     };
 
 
     // When submit is clicked content should be displayed on the white part of the screen
     // need backend etc for this portion may need to alter
     const handleSubmitFile = () => {
+        setIsFileSelected(false);
+        document.getElementById("uploading").style.display = "inline";
+
         if (file) {
             const formData = new FormData();
             formData.append("file", file);
@@ -78,6 +83,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
     };
 
     return (
+        <>
         <div className="side-bar">
             <div className="side-bar-header">Summarizer</div>
             <div className="divider"></div>
@@ -91,13 +97,15 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
             >
                 <FontAwesomeIcon icon={faUpload} size="1x"/>
                 <h3>Upload</h3>
+                <div id="uploading" style={{display: "none"}}>Uploading...</div>
             </a>
 
             {/* Show Submit Button in Sidebar if File is Selected, may need to fix later */}
             {isFileSelected && (
                 <button
                     onClick={handleSubmitFile}
-                    className="side-bar-links"
+                    className="submit-button"
+                    id="filename"
                     style={{marginLeft: "10px", marginTop: "5px", fontSize: "16px"}}
                 >
                     Submit
@@ -129,6 +137,7 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 <h3>Log out</h3>
             </a>
         </div>
+        </>
     );
 }
 

@@ -35,21 +35,28 @@ app.post('/api/login', async (req, res, next) => {
     // outgoing: id, fullname, error
     var error = '';
     const { login, password } = req.body;
+    const hash = await bcrypt.hash(password.trim(), 10);
+    console.log(hash);
     if (!login || !password) {
         return res.status(400).json({ error: "All fields must be provided." });
     }
     const db = client.db();
     console.log(await db.stats())
-    const hash= await bcrypt.compare(password.trim(), user.Password);
     if (!hash) {
         return res.status(401).json({ id: -1, fullName: '', error: 'Invalid password' });
     }
-    const results = await
-        db.collection('Users').find({ Login: login.trim(), Password: hash }).toArray();
+
+    let results =[];
+    const hashedUser = await db.collection('Users').find({ Login: login.trim()}).toArray();
+    console.log(hashedUser);
+    if( await bcrypt.compare(password, hashedUser[0].Password)){
+        results = await db.collection('Users').find({Login: login.trim()}).toArray();
+        console.log(results);
+    }
     var id = -1;
     var fn = '';
     console.log(results)
-    if (results.length > 0) {
+    if (results && results.length > 0) {
         id = results[0]._id;
         fn = results[0].fullName;
     }
@@ -70,7 +77,7 @@ app.post('/api/signup', async (req, res, next) => {
     console.log(await db.stats())
     const hash = await bcrypt.hash(password.trim(), 10);
     const results = await
-        db.collection('Users').insertOne({FullName: fullName.trim(), Login: login.trim(), Password: hash });
+        db.collection('Users').insertOne({FullName: fullName.trim(), Login: login.trim(), Password: hash, numCorrect: 0, numQuestions: 0, numQuizzes: 0 });
     if (results.length > 0) {
         error = results.error
     }
@@ -95,7 +102,6 @@ app.post('/api/search-summaries', async (req, res, next) => {
             {
                 $or: [
                     { "Name": { $regex: _search, $options: "i" } },
-                    { "Summary": { $regex: _search, $options: "i" } }
                 ]
             },
             { "userId": userId }
@@ -149,12 +155,13 @@ app.post('/api/process-file', upload.single('file'), async (req, res) => {
   try {
       var fileBuffer = req.file.buffer;
     const textData = await extractTextFromFile(fileBuffer);
-    console.log(textData);
-    //const summary = await summarizeText(textData);
-    //const quiz = await generateQuizQuestions(summary);
+    //console.log(textData);
+    const summary = await summarizeText(textData);
+    const quiz = await generateQuizQuestions(summary);
+    console.log("quiz in server.js: "+ quiz);
     const db = client.db();
     const dateCreated = new Date()
-    const results = await db.collection('Summaries').insertOne({Name: req.file.originalname, DateCreated: dateCreated, userId: userId, Summary: summary, Quiz: JSON.stringify(quiz)})
+    const results = await db.collection('Summaries').insertOne({Name: req.file.originalname, DateCreated: dateCreated, userId: userId, Summary: summary, Quiz: quiz})
       console.log(results);
       res.json({ summary: summary, summaryId: results.insertedId, quiz: quiz, summaryDateCreated: dateCreated.toString(), summaryName: req.file.originalname.toString() });
   } catch (error) {
@@ -239,6 +246,7 @@ app.post('/api/change-user-data', async (req, res, next) => {
     var error = '';
     const { userId, fName, password, userName } = req.body;
     console.log(req.body);
+    const hash= await bcrypt.compare(password.trim(), user.Password);
     let userObjectId = new ObjectId(userId);
     if (!userId || (!fName && !password)) {
         return res.status(400).json({ error: "All fields must be provided." });
@@ -269,7 +277,7 @@ app.post('/api/change-user-data', async (req, res, next) => {
         };
     }
 
-    const results = await db.collection('Users').updateOne({ "_id": userObjectId, "Password": password},
+    const results = await db.collection('Users').updateOne({ "_id": userObjectId, "Password": hash},
         updateData
         );
 
@@ -278,7 +286,7 @@ app.post('/api/change-user-data', async (req, res, next) => {
 });
 
 
-const summary = "Biomes Overview\n" +
+/*const summary = "Biomes Overview\n" +
     "Biomes are large ecosystems categorized into two major groups: terrestrial (land-based) and aquatic (ocean and freshwater). The key factors determining the distribution and characteristics of biomes are temperature and precipitation.\n" +
     "\n" +
     "Learning Objectives\n" +
@@ -304,7 +312,7 @@ const summary = "Biomes Overview\n" +
     "\n" +
     "Summary\n" +
     "Biomes are influenced primarily by temperature and precipitation, with variations in these factors affecting plant and animal life. Tropical wet forests have year-round growth due to stable temperatures and high rainfall, while other biomes like deserts and tundras feature low productivity due to harsh conditions. Each biome supports distinct plant and animal adaptations to survive its particular climate."
-
+*/
 const quiz = {
     "quizQuestions": [
         {

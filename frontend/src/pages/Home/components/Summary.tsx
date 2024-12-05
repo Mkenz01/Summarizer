@@ -107,10 +107,6 @@ function Summary() {
                     <h1 className="container-heading">Summary</h1>
                     <p className="container-information">Summary of {localStorage.getItem("summaryName")}</p>
                     <p className="container-information">Created: {formatDate(localStorage.getItem("summaryDateCreated") || "")}</p>
-                    <div className="button-container">
-                        <h4 className="buttons">Upload</h4>
-                        <h4 className="buttons">Take quiz</h4>
-                    </div>
                     <textarea id="summary-text-box" placeholder="Please upload a file to summarize" readOnly>
                         {localStorage.getItem("summary")}
                     </textarea>

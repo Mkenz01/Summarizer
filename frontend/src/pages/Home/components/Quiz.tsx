@@ -15,8 +15,9 @@ const DynamicQuiz: React.FC = () => {
   //const [questions, setQuestions] = useState<question[]>([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const isLoaded = true;
+  console.log(localStorage.getItem("quiz"));
   const questions: question[] = JSON.parse(localStorage.getItem("quiz") || '{"quizQuestions": []}').quizQuestions;
-  console.log(questions);
+
   let isSubmitted = false;
 
   const handleSubmit = (event: React.FormEvent) => {
