@@ -197,6 +197,37 @@ app.post('/api/save-quiz-results', async (req, res, next) => {
     res.status(200).json(ret);
 });
 
+app.post('/api/get-user-data', async (req, res, next) => {
+    // incoming: fullname login, password
+    // outgoing: id, fullname, error
+    var error = '';
+    const { userId } = req.body;
+    let userObjectId = new ObjectId(userId);
+    let userData= {
+        fName : "",
+        userName : "",
+        numCorrect : 0,
+        numQuestions : 0,
+        numQuizzes : 0,
+    }
+    if (!userId) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
+    const db = client.db();
+    const results = await db.collection('Users').find({ "_id": userObjectId}).toArray();
+    console.log(results[0]);
+    if(results.length > 0) {
+        userData.fName= results[0].FullName;
+        userData.userName= results[0].Login;
+        userData.numCorrect= results[0].numCorrect;
+        userData.numQuestions= results[0].numQuestions;
+        userData.numQuizzes= results[0].numQuizzes;
+    }
+
+    var ret = {userData: userData, error: error };
+    res.status(200).json(ret);
+});
+
 
 const summary = "Biomes Overview\n" +
     "Biomes are large ecosystems categorized into two major groups: terrestrial (land-based) and aquatic (ocean and freshwater). The key factors determining the distribution and characteristics of biomes are temperature and precipitation.\n" +
