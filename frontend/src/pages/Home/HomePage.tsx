@@ -4,7 +4,7 @@ import Quiz from './components/Quiz.tsx';
 import RightSideBar from './components/RightSideBar.tsx';
 import './index.css'
 import './components/sidebar.css'
-import {useState} from "react";
+import React, {useState} from "react";
 const HomePage: React.FC = () => {
         const [selection, setSelection] = useState<string>(sessionStorage.getItem("sidebarSelection") || "Account"); // Default to 'dashboard'
 
@@ -18,7 +18,9 @@ return(
     <div className="main">
     <Sidebar onSelect={handleSelect} />
     <Content selectedComponent={selection} />
-    <RightSideBar />
+        {selection !== "Account" && (
+            <RightSideBar />
+        )}
     </div>
 );
 }

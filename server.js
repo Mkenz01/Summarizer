@@ -47,7 +47,7 @@ app.post('/api/login', async (req, res, next) => {
         id = results[0]._id;
         fn = results[0].fullName;
     }
-    if(id < 0) error = 'User not found';
+    else error = 'User not found';
     var ret = { id: id, fullName: fn, error: error };
     res.status(200).json(ret);
 });
@@ -166,6 +166,35 @@ app.post('/generate-quiz', async (req, res) =>{
     catch(error){
         res.status(500).json({error: 'Failed to generate quiz' });
     }
+});
+
+app.post('/api/save-quiz-results', async (req, res, next) => {
+    // incoming: fullname login, password
+    // outgoing: id, fullname, error
+    var error = '';
+    console.log(req.body);
+    const { userId, numCorrect, numQuestions} = req.body;
+    let userObjectId = new ObjectId(userId);
+    if (!userId || !numCorrect || !numQuestions) {
+        return res.status(400).json({ error: "All fields must be provided." });
+    }
+    let updateData = {
+        $inc: {
+            numQuestions: numQuestions,
+            numQuizzes: 1,
+            numCorrect: numCorrect
+        },
+    };
+    console.log(userId, numQuestions, numCorrect);
+    const db = client.db();
+    console.log(await db.stats());
+    const result = await db.collection('Users').updateOne(
+        { _id: userObjectId }, // Search for the user by userId
+        updateData // Apply the increment and the set operation
+    );
+    console.log(result);
+    var ret = { error: error };
+    res.status(200).json(ret);
 });
 
 

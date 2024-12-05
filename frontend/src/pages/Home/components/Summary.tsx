@@ -116,28 +116,6 @@ function Summary() {
                     </textarea>
                 </div>
             </div>
-
-            <div className="past-files-side-bar">
-                <div className="input-box">
-                    <input
-                        type="text"
-                        className="search-input"
-                        placeholder="Search..."
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="past-files-side-bar-header">Past Summaries:</div>
-                {listedSummaries.map((summary, index) => (
-                    <div className="summary-card" key={index} onClick={() => handleSummarySelect(summary.summaryId)}>
-                    <div className="past-summaries-names" key={index}>
-                        {summary.name}
-                    </div>
-                    <div className="past-summaries-text" key={index}>
-                     {formatDate(summary.dateCreated)}
-                    </div>
-                    </div>
-                ))}
-            </div>
         </>
     );
 }

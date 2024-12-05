@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faAlignLeft } from '@fortawesome/free-solid-svg-icons';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 interface SidebarSelection {
@@ -78,22 +82,16 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
             <div className="side-bar-header">Summarizer</div>
             <div className="divider"></div>
             <a className="side-bar-links" onClick={() => handleSelect('Account')}>
-                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <FontAwesomeIcon icon={faUser} size="1x"/>
                 <h3>My Account</h3>
             </a>
 
-            <div
-                className="side-bar-links"
+            <a  className="side-bar-links"
                 onClick={handleFileSelect}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                }}
             >
-                Upload
                 <FontAwesomeIcon icon={faUpload} size="1x"/>
-            </div>
+                <h3>Upload</h3>
+            </a>
 
             {/* Show Submit Button in Sidebar if File is Selected, may need to fix later */}
             {isFileSelected && (
@@ -119,15 +117,15 @@ const Sidebar: React.FC<SidebarSelection> = ({ onSelect }) => {
                 </div>
             </div>
             <a className="side-bar-links" onClick={() => handleSelect('Summary')}>
-                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <FontAwesomeIcon icon={faAlignLeft} size="1x"/>
                 <h3>Summary</h3>
             </a>
             <a className="side-bar-links" onClick={() => handleSelect('Quiz')}>
-                <img src="../../../images/account-icon.png" alt="quiz icon" className="icons"/>
+                <FontAwesomeIcon icon={faQuestion} size="1x"/>
                 <h3>Quiz</h3>
             </a>
             <a className="side-bar-links" onClick={doHandleLogout}>
-                <img src="../../../images/account-icon.png" alt="account icon" className="icons"/>
+                <FontAwesomeIcon icon={faRightFromBracket} size="1x"/>
                 <h3>Log out</h3>
             </a>
         </div>

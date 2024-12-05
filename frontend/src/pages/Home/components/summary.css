@@ -121,8 +121,8 @@ h1{
     margin: 5px;
     cursor: pointer;
     padding: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .button-container
 {
