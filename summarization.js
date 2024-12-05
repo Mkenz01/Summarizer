@@ -11,7 +11,7 @@ const { OpenAI } = require('openai');
 const {openAiAPI} = require('./.env');
 
 const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_API_KEY, dangerouslyAllowBrowser: true,
+  apiKey: process.env.OPENAI_API_KEY, dangerouslyAllowBrowser: true,
 });
 
 async function extractTextFromFile(filePath) {
