@@ -5,6 +5,8 @@ const cors = require('cors');
 const multer = require('multer');
 const app = express();
 const upload = multer();
+const bcrypt = require('bcrypt');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use((req, res, next) => {
