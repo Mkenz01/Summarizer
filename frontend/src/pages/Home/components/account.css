@@ -116,6 +116,19 @@ h1{
 }
 .text-fields
 {
+
+    width: 350px;
+    height: 30px;
+    background-color: #bddaff;
+    border: 2px;
+    border-radius: 15px;
+    text-align: left;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.password-fields
+{
     width: 350px;
     height: 30px;
     background-color: #bddaff;
@@ -149,4 +162,27 @@ h1{
 .box-headers
 {
     margin-bottom: 30px !important;
+}
+
+.password-input{
+    width: 250px;
+    background: transparent;
+    border: none;
+}
+
+.button
+{
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #bddaff;
+    cursor: pointer;
+}
+::placeholder{
+    color: #333;
 }
